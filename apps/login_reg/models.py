@@ -29,7 +29,7 @@ class UserManager(models.Manager):
         if not re.match(NAME_REGEX, post_data['first_name']) or not re.match(NAME_REGEX, post_data['last_name']):
             errors.append('name fields must be letter characters only')
         if not re.match(EMAIL_REGEX, post_data['email']):
-            errors.append("invalid email")
+            errors.append("invalid email") 
         if len(User.objects.filter(email=post_data['email'])) > 0:
             errors.append("email already in use")
         if post_data['password'] != post_data['password_confirm']:
@@ -49,7 +49,6 @@ class UserManager(models.Manager):
             return new_user
         return errors
 
-
 class User(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
@@ -58,5 +57,23 @@ class User(models.Model):
     objects = UserManager()
     def __str__(self):
         return self.email
+
+class QuoteManager(models.Manager):
+    def validate_quote(self, post_data):
+        errors = []
+        if len(post_data ['author']) < 1:
+            errors.append("Please enter the Quote Author")
+        if len(post_data['quote']) < 5:
+            errors.append("Come on dude, enter a quote")
+
+class Quote(models.Model):
+    author_name = models.CharField(max_length=100)
+    quote = models.TextField(max_length=512)
+    user_upload = models.ForeignKey(User, related_name="uploaded_by")
+    user_favorite = models.ForeignKey(User, related_name="favorited_by")
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateField(auto_now=True)
+    objects = QuoteManager()
+    
 
 

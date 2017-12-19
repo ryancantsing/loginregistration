@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="usersHeadLeft">
+        <p> Posts by {{ user.first_name }} </p>
+        <p>Count: {{ len(quote.favorited_by) }}</p>
+    </div>
+    <div id="usersHeadRight">
+        <a href="/quotes"><button>Dashboard</button></a>
+        <a href="/"><button>Logout</button></a>
+    </div>
+    {% for quote in quotes %}
+    <div id="userQuotes">
+        <p>{{quote.author}}: {{ quote.text }}</p>
+    </div>
+    {% endfor %}
+</body>
+</html>

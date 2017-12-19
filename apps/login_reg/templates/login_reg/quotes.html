@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <!-- header material -->
+    <div id="headerLeft">
+        <h1>Welcome, {{ user.first_name }}!</h1>
+    </div>
+    <div id="headerRight"><a href="/"><button>Logout</button></a></div>
+    <!--- end header material -->
+    <!--- quotable quotes -->
+    <h2>Quotable Quotes</h2>
+    <div id="quoteScroll">
+        {% for quote in quotes %}
+        <div id="quotable">
+            <p> {{ quote.author}}: {{ quote.text }} </p>
+            <h6>Posted by {{ quote.user }}</h6>
+            <button>UPDATE PLACEHOLDER</button>
+        </div>
+        {% endfor %}
+    </div>
+    <!--- end quotable quotes -->
+    <!--- Favorite quotes -->
+    <div id="yourFavorites">
+        <h2>Your Favorites</h2>
+        <div id="favoritesScroll">
+        {% for quote in quotes %}
+            <div id="favorites">
+                <p> {{ quote.author}}: {{ quote.text }} </p>
+                <h6>Posted by {{ quote.user }}</h6>
+                <button>REMOVE PLACEHOLDER</button>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+    <!--- End Favorite quotes -->
+    <!--- AddQuotes -->
+    <div id="addQuote">
+        <form action="addQuote" method="POST">
+                {% csrf_token %}
+            <input type="text" name="author"><br>
+            <input type="text" name="quote"><br><br>
+            <input type="submit">
+        </form>
+    </div>
+    <!--- End add quotes -->
+    </body>
+</html>

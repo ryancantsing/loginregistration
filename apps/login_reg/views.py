@@ -5,7 +5,7 @@ from django.contrib import messages
 
 # Create your views here.
 def index(request):
-    return render(request, 'login_reg/index.html')
+    return render(request, 'login_reg/newindex.html')
 
 def register(request):
     result = User.objects.validate_registration(request.POST)
@@ -23,9 +23,10 @@ def login(request):
         for err in result:
             messages.error(request, err)
         return redirect('/')
-    request.session['user_id'] = result.id
-    messages.success(request, "Successfully logged in!")
-    return redirect('/success')
+    context = {
+        'user': User.objects.get(id=request.session['user_id'])
+    }    
+    return redirect('/quotes', context)
 
 def success(request):
     try:
@@ -35,4 +36,8 @@ def success(request):
     context = {
         'user': User.objects.get(id=request.session['user_id'])
     }
-    return render(request, 'login_reg/success.html', context) 
+    return render(request, 'login_reg/success.html', context)
+def quotes(request):
+    return render(request, 'login_reg/quotes.html')
+def users(request):
+    return render(request, 'login_reg/userspage.html')
